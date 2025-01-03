@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wjw.LearnJavaFrame.dao.UmsResourceCategoryDao">
+    <resultMap id="categoryWithResource" type="com.wjw.LearnJavaFrame.model.UmsResourceCategory">
+        <id property="id" column="id"></id>
+        <result property="createTime" column="create_time"></result>
+        <result property="name" column="name"></result>
+        <result property="sort" column="sort"></result>
+        <collection property="resources" ofType="com.wjw.LearnJavaFrame.model.UmsResource">
+            <id property="id" column="resources_id"></id>
+            <result property="name" column="resources_name"></result>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectCategoryWithResource" resultMap="categoryWithResource">
+        select urc.id,urc.create_time,urc.name,urc.sort,ur.id resources_id,ur.name resources_name
+        from ums_resource_category urc left join ums_resource ur on urc.id = ur.category_id where ur.id = #{id}
+    </select>
+</mapper>
